@@ -1,0 +1,23 @@
+
+name: Module 5 - Runners
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Ubuntu runner working"
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Windows runner working"
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - run: echo "Mac runner working"
+      - run: swift --version
