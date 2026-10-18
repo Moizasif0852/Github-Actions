@@ -1,5 +1,5 @@
 
-name: Module 6 - Matrix
+name: Module 6 - Matrix and Cache
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         node: [20, 22]
@@ -15,11 +16,16 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: npm
 
-      - run: node --version
+      - name: Show versions
+        run: node --version
+
+      - name: Show matrix
+        run: echo "Matrix build completed"
