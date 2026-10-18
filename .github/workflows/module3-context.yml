@@ -1,0 +1,36 @@
+
+name: Module 3 - Contexts
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  MESSAGE: "Hello from GitHub"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show contexts
+        run: |
+          echo "User: ${{ github.actor }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "OS: ${{ runner.os }}"
+          echo "Message: $MESSAGE"
+
+      - name: Check text
+        if: contains('hello-world', 'hello')
+        run: echo "Text found"
+
+      - name: Success condition
+        if: success()
+        run: echo "Steps succeeded"
+
+      - name: Failure condition
+        if: failure()
+        run: echo "A step failed"
+
+      - name: Always condition
+        if: always()
+        run: echo "Always checked"
