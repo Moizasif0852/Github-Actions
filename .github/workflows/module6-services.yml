@@ -1,0 +1,34 @@
+
+name: Module 6 - Database
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  database:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: student
+          POSTGRES_PASSWORD: example
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U student -d testdb"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Check database
+        env:
+          PGPASSWORD: example
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          psql -h localhost -U student -d testdb -c "SELECT 1;"
