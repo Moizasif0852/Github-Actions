@@ -1,0 +1,18 @@
+
+name: Module 7 - Use Custom Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run greeting action
+        id: hello
+        uses: Moizasif0852/hello-custom-action@v1.0.0
+        with:
+          name: Student
+
+      - name: Show greeting
+        run: echo "${{ steps.hello.outputs.greeting }}"
