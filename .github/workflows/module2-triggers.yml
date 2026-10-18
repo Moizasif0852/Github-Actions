@@ -1,0 +1,40 @@
+
+name: Module 2 - Triggers
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Enter your name"
+        required: true
+        default: "Student"
+      greeting:
+        description: "Enter greeting"
+        required: true
+        default: "Hello"
+      data:
+        description: "Enter data"
+        required: false
+        default: "GitHub"
+  repository_dispatch:
+    types: [custom-webhook]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show trigger
+        run: echo "Workflow is running"
+
+      - name: Show inputs
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Name: ${{ inputs.name }}"
+          echo "Greeting: ${{ inputs.greeting }}"
+          echo "Data: ${{ inputs.data }}"
